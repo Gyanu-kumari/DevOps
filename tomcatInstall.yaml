@@ -1,0 +1,24 @@
+---
+- name: install tomcat server
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: download tomcat server packages
+    get_url:
+      url: https://apachemirror.wuchna.com/tomcat/tomcat-7/v7.0.109/bin/apache-tomcat-7.0.109.tar.gz
+      dest: /home/ec2-user/tars
+
+  - name: extract tomcat packages
+    unarchive:
+      src: /home/ec2-user/tars/apache-tomcat-7.0.109.tar.gz
+      dest: /home/ec2-user/tars
+      remote_src: yes
+
+  - name: "start and enable tomcat service"
+    service:
+      enabled: true
+      name: tomcat
+      state: started
+
